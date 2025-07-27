@@ -1,5 +1,27 @@
 <template>
   <div class="p-6 space-y-6">
+
+    <!-- Filter Controls -->
+    <div class="flex space-x-4 items-center">
+      <label>
+        Range:
+        <select v-model="range" class="ml-2 border rounded p-1">
+          <option value="day">1 Day</option>
+          <option value="week">7 Days</option>
+          <option value="month">30 Days</option>
+        </select>
+      </label>
+
+      <label>
+        <input type="checkbox" v-model="onlyCampi" class="ml-2" />
+        Only Campi Flegrei
+      </label>
+
+      <button @click="loadEvents" class="bg-blue-600 text-white px-4 py-2 rounded">
+        🔄 Refresh
+      </button>
+    </div>
+
     <!-- 🔴 Anomaly Alert -->
     <div
       v-if="alert?.alert"
@@ -34,6 +56,24 @@ import Deformation3D from '../components/Deformation3D.vue'
 
 // State
 const alert = ref(null)
+const range = ref('day')
+const onlyCampi = ref(false)
+const events = ref([])
+
+async function loadEvents() {
+  try {
+    const response = await axios.get('/api/seismic/events', {
+      params: {
+        range: range.value,
+        region: onlyCampi.value ? 'campi' : '',
+      },
+    })
+    events.value = response.data
+  } catch (err) {
+    console.error('Failed to fetch filtered events', err)
+  }
+}
+
 
 onMounted(async () => {
   try {
