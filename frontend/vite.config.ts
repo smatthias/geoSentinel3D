@@ -16,10 +16,7 @@ export default defineConfig({
     },
     host: '0.0.0.0',
     port: 5173,
-    allowedHosts: [
-      'www.geosentinal3d.com',
-      'geoSentinal3d.com'
-    ]
+    allowedHosts: true
   },
   resolve: {
     alias: {
