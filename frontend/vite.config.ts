@@ -15,7 +15,11 @@ export default defineConfig({
       '/api': 'http://localhost:3000', // your backend
     },
     host: '0.0.0.0',
-    port: 5173
+    port: 5173,
+    allowedHosts: [
+      'www.geosentinal3d.com',
+      'geoSentinal3d.com'
+    ]
   },
   resolve: {
     alias: {
