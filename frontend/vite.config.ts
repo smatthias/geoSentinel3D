@@ -12,11 +12,11 @@ export default defineConfig({
   ],
   server: {
     proxy: {
-      '/api': 'http://localhost:3000', // your backend
+      '/api': 'http://backend:3000', // 👈 use service name, not localhost
     },
     host: '0.0.0.0',
     port: 5173,
-    allowedHosts: true
+    //allowedHosts: true
   },
   resolve: {
     alias: {

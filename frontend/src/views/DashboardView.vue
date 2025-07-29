@@ -77,7 +77,7 @@ async function loadEvents() {
 
 onMounted(async () => {
   try {
-    const response = await axios.get('/api/seismic/alert')
+    const response = await axios.get('/api/alert')
     alert.value = response.data
   } catch (error) {
     console.error('Failed to fetch alert data', error)

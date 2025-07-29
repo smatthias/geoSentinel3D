@@ -79,7 +79,7 @@ onMounted(async () => {
 
   // Load alert
   try {
-    const response = await axios.get('/api/seismic/alert')
+    const response = await axios.get('/api/alert')
     alert.value = response.data
   } catch (err) {
     console.error('Failed to fetch alert data', err)
@@ -90,21 +90,27 @@ onMounted(async () => {
 watch(
   () => events.value,
   (newEvents) => {
-    markers.forEach((m) => m.remove())
-    markers = []
+    if (!map) return;
 
+    // Remove existing markers
+    markers.forEach((m) => m.remove());
+    markers = [];
+
+    // Add new markers
     newEvents.forEach((event) => {
-      const [lon, lat] = event.coordinates
+      if (!event.coordinates || event.coordinates.length !== 3) return;
+
+      const [lon, lat] = event.coordinates;
       const marker = L.marker([lat, lon])
         .addTo(map)
         .bindPopup(
           `<strong>M ${event.magnitude}</strong><br>${event.location}<br><small>${new Date(
             event.time
           ).toLocaleString()}</small>`
-        )
-      markers.push(marker)
-    })
+        );
+      markers.push(marker);
+    });
   },
   { immediate: true }
-)
+);
 </script>
