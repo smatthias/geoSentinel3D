@@ -1,13 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Dashboard from '../views/DashboardView.vue'
+import LandingPage from '../views/LandingPageView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      name: 'Dashboard',
-      component: Dashboard,
+      name: 'LandingPage',
+      component: LandingPage,
     },
     {
       path: '/about',
